@@ -47,25 +47,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: DraggablePanel(
-        size: Size(300, 200),
-        minSize: Size(200, 190),
-        sideSize: 8,
-        draggableSides: DraggableSides.all(isDraggable: true),
-        child: Container(
-          child: Center(
-            child: Text('123'),
-          ),
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      )
-    );
+        body: DraggablePanel(
+          size: Size(300, 200),
+          minSize: Size(200, 190),
+          sideSize: 8,
+          draggableSides: DraggableSides.all(isDraggable: true),
+          child: Container(
+            child: Center(
+              child: Text('123'),
+            ),
+          ),
+        ));
   }
 }

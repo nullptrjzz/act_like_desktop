@@ -1,28 +1,28 @@
 # act_like_desktop
 
-让Widget看起来更像桌面环境的组件，与移动界面和网页组件的行为不同。
+- [Chinese](README_zh.md)
 
 Make widgets act more like desktop, not mobile or web environment.
 
 
+## Introduction
 
-## 介绍
+The package is recommended used for Flutter desktop, to solve the problem that there isn't enough support for desktop widgets yet.
+So I do some work to make it **act like desktop** according to the usage habits of desktop environment.
 
-这是一个用于Flutter desktop项目的包，目的是为了解决目前Flutter desktop并没有提供很好的桌面组件的支持而建立，让现有的组件符合桌面环境的使用习惯而进行相应的封装。
+### Finished:
 
-### 目前已实现：
+- ```DraggablePanel```, allows adjusting widget size by dragging the edge
 
-- ```DraggablePanel```，可以拖动边缘调整组件的大小
+### Todo List:
 
-### Todo List：
-
-A lot...随着我对Flutter Desktop开发的深入，也会增加其他组件。也欢迎提交代码。
-
+A lot... Other widgets will come up as I keep working with Flutter desktop. Of course, pull requests are welcomed. 
 
 
-## 开始使用
 
-clone本仓库，并在```pubspec.yaml```中添加：
+## Usage
+
+Clone the repository, and add the code into ```pubspec.yaml```:
 
 ```yaml
 dependencies:
@@ -30,7 +30,7 @@ dependencies:
     path: ../act_like_desktop
 ```
 
-或者在```pubspec.yaml```中添加：
+Or:
 
 ```
 dependencies:
