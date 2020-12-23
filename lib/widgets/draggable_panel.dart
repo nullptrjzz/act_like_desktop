@@ -89,13 +89,14 @@ class _DraggablePanelState extends State<DraggablePanel> {
   }
 
   // 四个角上的缩放
-  GestureDetector cornerDetector([double fh = 1, double fv = 1]) =>
+  GestureDetector cornerDetector([double fh = 1, double fv = 1, int style = 0]) =>
       GestureDetector(
         child: MouseRegion(
           child: Container(
             width: widget.sideSize,
           ),
-          cursor: SystemMouseCursors.resizeUpLeftDownRight,
+          cursor: style == 0 ? SystemMouseCursors.resizeUpLeftDownRight
+              : SystemMouseCursors.resizeUpRightDownLeft,
         ),
         onVerticalDragStart: (d) {
           lastX = d.localPosition.dx;
@@ -280,7 +281,7 @@ class _DraggablePanelState extends State<DraggablePanel> {
                 width: widget.sideSize,
                 height: widget.sideSize,
                 top: 0,
-                child: cornerDetector(1, -1),
+                child: cornerDetector(1, -1, 1),
               )
             : Container(width: 0, height: 0)),
 
@@ -291,7 +292,7 @@ class _DraggablePanelState extends State<DraggablePanel> {
                 width: widget.sideSize,
                 height: widget.sideSize,
                 bottom: 0,
-                child: cornerDetector(-1, 1),
+                child: cornerDetector(-1, 1, 1),
               )
             : Container(width: 0, height: 0)),
 
