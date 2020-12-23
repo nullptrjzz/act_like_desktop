@@ -108,30 +108,46 @@ class _DraggablePanelState extends State<DraggablePanel> {
         },
         onVerticalDragUpdate: (d) {
           setState(() {
+            double targetX = width + fh * (d.localPosition.dx - lastX);
+            double targetY = height + fv * (d.localPosition.dy - lastY);
+
             width = min(
                 max(widget.minSize.width,
-                    width + fh * (d.localPosition.dx - lastX)),
+                    targetX),
                 widget.maxSize.width);
             height = min(
                 max(widget.minSize.height,
-                    height + fv * (d.localPosition.dy - lastY)),
+                    targetY),
                 widget.maxSize.height);
-            lastX = d.localPosition.dx;
-            lastY = d.localPosition.dy;
+
+            if (width == targetX) {
+              lastX = d.localPosition.dx;
+            }
+            if (height == targetY) {
+              lastY = d.localPosition.dy;
+            }
           });
         },
         onHorizontalDragUpdate: (d) {
           setState(() {
+            double targetX = width + fh * (d.localPosition.dx - lastX);
+            double targetY = height + fv * (d.localPosition.dy - lastY);
+
             width = min(
                 max(widget.minSize.width,
-                    width + fh * (d.localPosition.dx - lastX)),
+                    targetX),
                 widget.maxSize.width);
             height = min(
                 max(widget.minSize.height,
-                    height + fv * (d.localPosition.dy - lastY)),
+                    targetY),
                 widget.maxSize.height);
-            lastX = d.localPosition.dx;
-            lastY = d.localPosition.dy;
+
+            if (width == targetX) {
+              lastX = d.localPosition.dx;
+            }
+            if (height == targetY) {
+              lastY = d.localPosition.dy;
+            }
           });
         },
       );
@@ -146,28 +162,36 @@ class _DraggablePanelState extends State<DraggablePanel> {
         ),
         onVerticalDragStart: (d) {
           lastX = d.localPosition.dx;
-          lastY = d.localPosition.dy;
         },
         onHorizontalDragStart: (d) {
           lastX = d.localPosition.dx;
-          lastY = d.localPosition.dy;
         },
         onVerticalDragUpdate: (d) {
           setState(() {
+            double targetX = width + f * (d.localPosition.dx - lastX);
+
             width = min(
                 max(widget.minSize.width,
-                    width + f * (d.localPosition.dx - lastX)),
+                    targetX),
                 widget.maxSize.width);
-            lastX = d.localPosition.dx;
+
+            if (width == targetX) {
+              lastX = d.localPosition.dx;
+            }
           });
         },
         onHorizontalDragUpdate: (d) {
           setState(() {
+            double targetX = width + f * (d.localPosition.dx - lastX);
+
             width = min(
                 max(widget.minSize.width,
-                    width + f * (d.localPosition.dx - lastX)),
+                    targetX),
                 widget.maxSize.width);
-            lastX = d.localPosition.dx;
+
+            if (width == targetX) {
+              lastX = d.localPosition.dx;
+            }
           });
         },
       );
@@ -181,29 +205,37 @@ class _DraggablePanelState extends State<DraggablePanel> {
           cursor: SystemMouseCursors.resizeUpDown,
         ),
         onVerticalDragStart: (d) {
-          lastX = d.localPosition.dx;
           lastY = d.localPosition.dy;
         },
         onHorizontalDragStart: (d) {
-          lastX = d.localPosition.dx;
           lastY = d.localPosition.dy;
         },
         onVerticalDragUpdate: (d) {
           setState(() {
+            double targetY = height + f * (d.localPosition.dy - lastY);
+
             height = min(
                 max(widget.minSize.height,
-                    height + f * (d.localPosition.dy - lastY)),
+                    targetY),
                 widget.maxSize.height);
-            lastY = d.localPosition.dy;
+
+            if (height == targetY) {
+              lastY = d.localPosition.dy;
+            }
           });
         },
         onHorizontalDragUpdate: (d) {
           setState(() {
+            double targetY = height + f * (d.localPosition.dy - lastY);
+
             height = min(
                 max(widget.minSize.height,
-                    height + f * (d.localPosition.dy - lastY)),
+                    targetY),
                 widget.maxSize.height);
-            lastY = d.localPosition.dy;
+
+            if (height == targetY) {
+              lastY = d.localPosition.dy;
+            }
           });
         },
       );
