@@ -3,11 +3,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-/// 可拖动的边缘，包括上下左右
+/// Draggable sides, including top, bottom, left and right.
 class DraggableSides {
+
+  /// enables the drag-resize operation on the top edge
   final bool top;
+
+  /// enables the drag-resize operation on the bottom edge
   final bool bottom;
+
+  /// enables the drag-resize operation on the left edge
   final bool left;
+
+  /// enables the drag-resize operation on the right edge
   final bool right;
 
   const DraggableSides(
@@ -34,23 +42,26 @@ class DraggableSides {
             right: horizontal);
 }
 
-/// 可拖拉缩放的Panel，由[Container]包裹一个[child]。
-/// 鼠标在组件边缘时会变成可缩放的指针，参考[SystemMouseCursors]中的相关对象。
+/// A draggable panel, containing a [Container] which wraps the [child].
+/// Mouse pointer will become the "resize" style, see [SystemMouseCursors].
 class DraggablePanel extends StatefulWidget {
-  /// 初始的组件大小
+
+  /// initial widget size
   final Size size;
 
-  /// 组件最小大小
+  /// minimum widget size
   final Size minSize;
 
-  /// 组件最大大小
+  /// maximum widget size
   final Size maxSize;
+
+  /// widget in the panel
   final Widget child;
 
-  /// 可拖拉边框的粗细，默认为8
+  /// the width of draggable edge, default to 8
   final double sideSize;
 
-  /// 可拖动的边缘，包括上下左右
+  /// draggable sides, including top, bottom, left and right
   final DraggableSides draggableSides;
 
   DraggablePanel(
