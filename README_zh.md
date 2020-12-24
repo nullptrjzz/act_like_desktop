@@ -33,7 +33,7 @@ dependencies:
 
 或者在```pubspec.yaml```中添加：
 
-```
+```yaml
 dependencies:
   act_like_desktop: ^0.0.2
 ```

@@ -36,7 +36,7 @@ dependencies:
 
 Or:
 
-```
+```yaml
 dependencies:
   act_like_desktop: ^0.0.2
 ```
