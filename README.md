@@ -10,6 +10,9 @@ Make widgets act more like desktop, not mobile or web environment.
 The package is recommended used for Flutter desktop, to solve the problem that there isn't enough support for desktop widgets yet.
 So I do some work to make it **act like desktop** according to the usage habits of desktop environment.
 
+### Example
+![example](https://github.com/nullptrjzz/act_like_desktop/raw/master/screenshots/1.gif)
+
 ### Finished:
 
 - ```DraggablePanel```, allows adjusting widget size by dragging the edge
@@ -36,4 +39,3 @@ Or:
 dependencies:
   act_like_desktop: ^0.0.1
 ```
-
