@@ -17,6 +17,9 @@ class _DraggableTab extends StatefulWidget {
   /// the widget in the tab
   final Widget child;
 
+  /// the text of the tab, ignored when [child] is not null
+  final String text;
+
   /// tab's index, useful during replacement
   final int index;
 
@@ -37,16 +40,23 @@ class _DraggableTab extends StatefulWidget {
   /// [TabPage], with the argument [TabPage.tabAnimate]
   final bool animate;
 
+  /// whether this tab is initially selected
+  final bool initialSelect;
+
   _DraggableTab(
       {Key key,
       @required this.index,
       this.child,
-      this.selectedElevation = 4,
+      this.text,
+      this.selectedElevation = 0,
       this.animate = true,
+      this.initialSelect = false,
       this.updatingListener,
       this.finishListener,
       this.tapListener})
-      : super(key: key);
+      : super(key: key) {
+    assert(child != null || text != null);
+  }
 
   @override
   State createState() => _DraggableTabState();
@@ -58,6 +68,7 @@ class _DraggableTabState extends State<_DraggableTab> {
   double _lastX = 0;
   bool selected = false;
   Timer translateTimer;
+  WidgetsBinding binding;
 
   void setSelected(bool selected) {
     setState(() {
@@ -89,6 +100,16 @@ class _DraggableTabState extends State<_DraggableTab> {
     }
   }
 
+
+  @override
+  void initState() {
+    super.initState();
+    binding = WidgetsBinding.instance;
+    binding.addPostFrameCallback((timeStamp) {
+      setSelected(widget.initialSelect);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -97,9 +118,27 @@ class _DraggableTabState extends State<_DraggableTab> {
         child: Material(
           elevation: selected ? widget.selectedElevation : 0,
           child: Container(
+            decoration: BoxDecoration(
+              color: selected ? Colors.white : Colors.grey.withOpacity(0.5),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8)
+              ),
+              border: Border(
+                top: BorderSide(color: Colors.transparent),
+                bottom: BorderSide(color: Colors.transparent),
+                left: BorderSide(color: Colors.transparent),
+                right: BorderSide(color: Colors.transparent)
+              )
+            ),
             alignment: Alignment.center,
             height: widget.height,
-            child: widget.child,
+            child: widget.child ?? Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(widget.text, style: TextStyle(
+                fontWeight: selected ? FontWeight.bold : FontWeight.normal
+              ),),
+            ),
           ),
         ),
         onTap: () {
@@ -160,6 +199,9 @@ class _DraggableTabBar extends StatefulWidget {
   /// tabs
   final List<Widget> children;
 
+  /// tab texts
+  final List<String> texts;
+
   /// when the tab is selected, it will be called
   final Function(int) updateSelected;
 
@@ -168,8 +210,13 @@ class _DraggableTabBar extends StatefulWidget {
   /// [TabPage], with the argument [TabPage.tabAnimate]
   final bool animate;
 
-  _DraggableTabBar({Key key, this.children = const [], this.updateSelected, this.animate})
-      : super(key: key);
+  /// tab index that initially selected
+  final int initialIndex;
+
+  _DraggableTabBar({Key key, this.children, this.texts, this.updateSelected, this.animate, this.initialIndex = 0})
+      : super(key: key) {
+    assert(children != null || texts != null);
+  }
 
   @override
   State createState() => _DraggableTabBarState();
@@ -245,17 +292,19 @@ class _DraggableTabBarState extends State<_DraggableTabBar> {
       });
     });
 
-    int index = 0;
-    widget.children.forEach((child) {
+    int total = widget.children != null ? widget.children.length : widget.texts.length;
+    for (int index = 0; index < total; index++) {
       keys.add(GlobalKey<_DraggableTabState>());
       lefts.add(0);
       widths.add(0);
       indexes.add(index);
       tabs.add(_DraggableTab(
         key: keys[index],
-        child: widget.children[index],
+        child: widget.children == null ? null : widget.children[index],
+        text: widget.children == null ? widget.texts[index] : null,
         index: index,
         animate: widget.animate,
+        initialSelect: widget.initialIndex == index,
         finishListener: (index) {
           keys[index].currentState.setLeft(lefts[index]);
         },
@@ -288,8 +337,7 @@ class _DraggableTabBarState extends State<_DraggableTabBar> {
           updateSelected(index);
         },
       ));
-      index++;
-    });
+    }
   }
 
   @override
@@ -332,10 +380,10 @@ class TabPage extends StatefulWidget {
   /// if you want more stability and better performance, set it to false
   final bool tabAnimate;
 
-  List<Widget> get tabList =>
-      tabs == null ? tabNames.map((e) => Text(e)).toList() : tabs;
+  /// tab index that initially selected
+  final int initialIndex;
 
-  TabPage({this.tabs, this.tabNames = const [], this.pages = const [], this.tabAnimate = true}) {
+  TabPage({this.tabs, this.tabNames = const [], this.pages = const [], this.tabAnimate = true, this.initialIndex = 0}) {
     assert((tabs != null && tabs.length == pages.length) ||
         tabNames.length == pages.length);
   }
@@ -366,8 +414,10 @@ class _TagPageState extends State<TabPage> {
       children: [
         _DraggableTabBar(
           updateSelected: updateSelected,
-          children: widget.tabList,
-          animate: widget.tabAnimate
+          children: widget.tabs,
+          texts: widget.tabNames,
+          animate: widget.tabAnimate,
+          initialIndex: widget.initialIndex,
         ),
         Expanded(
           child: Container(
