@@ -7,9 +7,13 @@
 
 这是一个用于Flutter desktop项目的包，目的是为了解决目前Flutter desktop并没有提供很好的桌面组件的支持而建立，让现有的组件符合桌面环境的使用习惯而进行相应的封装。
 
+### 演示
+![example](https://github.com/nullptrjzz/act_like_desktop/raw/main/screenshots/1.gif)
+
 ### 目前已实现：
 
 - ```DraggablePanel```，可以拖动边缘调整组件的大小
+- ```TabPanel```，可以拖动标签的标签页
 
 ### Todo List：
 
@@ -31,6 +35,6 @@ dependencies:
 
 ```
 dependencies:
-  act_like_desktop: ^0.0.1
+  act_like_desktop: ^0.0.2
 ```
 

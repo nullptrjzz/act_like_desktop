@@ -16,6 +16,7 @@ So I do some work to make it **act like desktop** according to the usage habits 
 ### Finished:
 
 - ```DraggablePanel```, allows adjusting widget size by dragging the edge
+- ```TabPanel```, a tab panel with draggable tabs
 
 ### Todo List:
 
@@ -37,5 +38,5 @@ Or:
 
 ```
 dependencies:
-  act_like_desktop: ^0.0.1
+  act_like_desktop: ^0.0.2
 ```
