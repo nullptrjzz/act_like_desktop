@@ -11,7 +11,7 @@ The package is recommended used for Flutter desktop, to solve the problem that t
 So I do some work to make it **act like desktop** according to the usage habits of desktop environment.
 
 ### Example
-![example](https://github.com/nullptrjzz/act_like_desktop/raw/master/screenshots/1.gif)
+![example](https://github.com/nullptrjzz/act_like_desktop/raw/main/screenshots/1.gif)
 
 ### Finished:
 
