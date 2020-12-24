@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 
 /// Draggable sides, including top, bottom, left and right.
 class DraggableSides {
-
   /// enables the drag-resize operation on the top edge
   final bool top;
 
@@ -45,7 +44,6 @@ class DraggableSides {
 /// A draggable panel, containing a [Container] which wraps the [child].
 /// Mouse pointer will become the "resize" style, see [SystemMouseCursors].
 class DraggablePanel extends StatefulWidget {
-
   /// initial widget size
   final Size size;
 
@@ -100,13 +98,15 @@ class _DraggablePanelState extends State<DraggablePanel> {
   }
 
   // 四个角上的缩放
-  GestureDetector cornerDetector([double fh = 1, double fv = 1, int style = 0]) =>
+  GestureDetector cornerDetector(
+          [double fh = 1, double fv = 1, int style = 0]) =>
       GestureDetector(
         child: MouseRegion(
           child: Container(
             width: widget.sideSize,
           ),
-          cursor: style == 0 ? SystemMouseCursors.resizeUpLeftDownRight
+          cursor: style == 0
+              ? SystemMouseCursors.resizeUpLeftDownRight
               : SystemMouseCursors.resizeUpRightDownLeft,
         ),
         onVerticalDragStart: (d) {
@@ -122,14 +122,10 @@ class _DraggablePanelState extends State<DraggablePanel> {
             double targetX = width + fh * (d.localPosition.dx - lastX);
             double targetY = height + fv * (d.localPosition.dy - lastY);
 
-            width = min(
-                max(widget.minSize.width,
-                    targetX),
-                widget.maxSize.width);
-            height = min(
-                max(widget.minSize.height,
-                    targetY),
-                widget.maxSize.height);
+            width =
+                min(max(widget.minSize.width, targetX), widget.maxSize.width);
+            height =
+                min(max(widget.minSize.height, targetY), widget.maxSize.height);
 
             if (width == targetX) {
               lastX = d.localPosition.dx;
@@ -144,14 +140,10 @@ class _DraggablePanelState extends State<DraggablePanel> {
             double targetX = width + fh * (d.localPosition.dx - lastX);
             double targetY = height + fv * (d.localPosition.dy - lastY);
 
-            width = min(
-                max(widget.minSize.width,
-                    targetX),
-                widget.maxSize.width);
-            height = min(
-                max(widget.minSize.height,
-                    targetY),
-                widget.maxSize.height);
+            width =
+                min(max(widget.minSize.width, targetX), widget.maxSize.width);
+            height =
+                min(max(widget.minSize.height, targetY), widget.maxSize.height);
 
             if (width == targetX) {
               lastX = d.localPosition.dx;
@@ -181,10 +173,8 @@ class _DraggablePanelState extends State<DraggablePanel> {
           setState(() {
             double targetX = width + f * (d.localPosition.dx - lastX);
 
-            width = min(
-                max(widget.minSize.width,
-                    targetX),
-                widget.maxSize.width);
+            width =
+                min(max(widget.minSize.width, targetX), widget.maxSize.width);
 
             if (width == targetX) {
               lastX = d.localPosition.dx;
@@ -195,10 +185,8 @@ class _DraggablePanelState extends State<DraggablePanel> {
           setState(() {
             double targetX = width + f * (d.localPosition.dx - lastX);
 
-            width = min(
-                max(widget.minSize.width,
-                    targetX),
-                widget.maxSize.width);
+            width =
+                min(max(widget.minSize.width, targetX), widget.maxSize.width);
 
             if (width == targetX) {
               lastX = d.localPosition.dx;
@@ -225,10 +213,8 @@ class _DraggablePanelState extends State<DraggablePanel> {
           setState(() {
             double targetY = height + f * (d.localPosition.dy - lastY);
 
-            height = min(
-                max(widget.minSize.height,
-                    targetY),
-                widget.maxSize.height);
+            height =
+                min(max(widget.minSize.height, targetY), widget.maxSize.height);
 
             if (height == targetY) {
               lastY = d.localPosition.dy;
@@ -239,10 +225,8 @@ class _DraggablePanelState extends State<DraggablePanel> {
           setState(() {
             double targetY = height + f * (d.localPosition.dy - lastY);
 
-            height = min(
-                max(widget.minSize.height,
-                    targetY),
-                widget.maxSize.height);
+            height =
+                min(max(widget.minSize.height, targetY), widget.maxSize.height);
 
             if (height == targetY) {
               lastY = d.localPosition.dy;

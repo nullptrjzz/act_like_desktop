@@ -33,35 +33,46 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: DraggablePanel(
-          size: Size(800, 600),
-          draggableSides: DraggableSides.all(isDraggable: true),
-          child: Container(
-            color: Colors.grey,
-            child: TabPage(
-              tabs: [
-                Container(
-                  color: Colors.yellow,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text('Tab1'),
+      size: Size(800, 600),
+      draggableSides: DraggableSides.all(isDraggable: true),
+      child: Container(
+          color: Colors.grey,
+          child: TabPage(
+            tabs: [
+              Container(
+                color: Colors.yellow,
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text('Tab1'),
+              ),
+              Container(
+                color: Colors.lightBlue,
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text('Tab2, a bit longer'),
+              ),
+              Container(
+                color: Colors.lightGreen,
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text('Tab3 is here'),
+              ),
+            ],
+            pages: [
+              Container(
+                child: Center(
+                  child: Text('1'),
                 ),
-                Container(
-                  color: Colors.lightBlue,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text('Tab2, a bit longer'),
+              ),
+              Container(
+                child: Center(
+                  child: Text('2'),
                 ),
-                Container(
-                  color: Colors.lightGreen,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text('Tab3 is here'),
+              ),
+              Container(
+                child: Center(
+                  child: Text('3'),
                 ),
-              ],
-              pages: [
-                Container(child: Center(child: Text('1'),),),
-                Container(child: Center(child: Text('2'),),),
-                Container(child: Center(child: Text('3'),),),
-              ],
-            )
-          ),
-        ));
+              ),
+            ],
+          )),
+    ));
   }
 }

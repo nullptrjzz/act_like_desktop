@@ -10,7 +10,6 @@ import 'package:flutter/rendering.dart';
 /// [_DraggableTabBar] to complete the placement procedure. Use [TabPage] and set
 /// [TabPage.tabs] or [TabPage.tabNames] instead.
 class _DraggableTab extends StatefulWidget {
-
   /// panel height, default to 40 and changes are not supported yet
   final double height = 40;
 
@@ -131,14 +130,14 @@ class _DraggableTabState extends State<_DraggableTab> {
 /// [TabPage] to complete the placement procedure. Use [TabPage] and set
 /// [TabPage.tabs] or [TabPage.tabNames] instead.
 class _DraggableTabBar extends StatefulWidget {
-
   /// tabs
   final List<Widget> children;
 
   /// when the tab is selected, it will be called
   final Function(int) updateSelected;
 
-  _DraggableTabBar({Key key, this.children = const [], this.updateSelected}) : super(key: key);
+  _DraggableTabBar({Key key, this.children = const [], this.updateSelected})
+      : super(key: key);
 
   @override
   State createState() => _DraggableTabBarState();
@@ -285,7 +284,6 @@ class _DraggableTabBarState extends State<_DraggableTabBar> {
 /// A container with [_DraggableTabBar] and the pages inside. Used to replace
 /// [TabBar] and [TabBarView] on desktop.
 class TabPage extends StatefulWidget {
-
   /// The tab widgets to show on tab bar
   ///
   /// If [tabs] == null, then [tabNames] must be provided
@@ -297,11 +295,12 @@ class TabPage extends StatefulWidget {
   /// Cannot be null, but empty list allowed
   final List<Widget> pages;
 
-  List<Widget> get tabList => tabs == null
-      ? tabNames.map((e) => Text(e)).toList() : tabs;
+  List<Widget> get tabList =>
+      tabs == null ? tabNames.map((e) => Text(e)).toList() : tabs;
 
   TabPage({this.tabs, this.tabNames = const [], this.pages = const []}) {
-    assert((tabs != null && tabs.length == pages.length) || tabNames.length == pages.length);
+    assert((tabs != null && tabs.length == pages.length) ||
+        tabNames.length == pages.length);
   }
 
   @override
