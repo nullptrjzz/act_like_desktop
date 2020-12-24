@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -31,11 +32,17 @@ class _DraggableTab extends StatefulWidget {
   /// the [Material.elevation] when the tab is selected
   final double selectedElevation;
 
+  /// whether to enable the animation of tab slide, default to true,
+  /// if you want more stability and better performance, set it to false from
+  /// [TabPage], with the argument [TabPage.tabAnimate]
+  final bool animate;
+
   _DraggableTab(
       {Key key,
       @required this.index,
       this.child,
       this.selectedElevation = 4,
+      this.animate = true,
       this.updatingListener,
       this.finishListener,
       this.tapListener})
@@ -47,8 +54,10 @@ class _DraggableTab extends StatefulWidget {
 
 class _DraggableTabState extends State<_DraggableTab> {
   double left = 0;
+  double targetLeft = 0;
   double _lastX = 0;
   bool selected = false;
+  Timer translateTimer;
 
   void setSelected(bool selected) {
     setState(() {
@@ -57,9 +66,27 @@ class _DraggableTabState extends State<_DraggableTab> {
   }
 
   void setLeft(double left) {
-    setState(() {
-      this.left = left;
-    });
+    if (widget.animate) {
+      this.targetLeft = left;
+      if (translateTimer != null && translateTimer.isActive) {
+        translateTimer.cancel();
+      }
+      translateTimer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+        double delta = (targetLeft - this.left) / 5;
+        setState(() {
+          if (delta.abs() < 0.1) {
+            this.left = targetLeft;
+            timer.cancel();
+          } else {
+            this.left = this.left + delta;
+          }
+        });
+      });
+    } else {
+      setState(() {
+        this.left = left;
+      });
+    }
   }
 
   @override
@@ -136,7 +163,12 @@ class _DraggableTabBar extends StatefulWidget {
   /// when the tab is selected, it will be called
   final Function(int) updateSelected;
 
-  _DraggableTabBar({Key key, this.children = const [], this.updateSelected})
+  /// whether to enable the animation of tab slide, default to true,
+  /// if you want more stability and better performance, set it to false from
+  /// [TabPage], with the argument [TabPage.tabAnimate]
+  final bool animate;
+
+  _DraggableTabBar({Key key, this.children = const [], this.updateSelected, this.animate})
       : super(key: key);
 
   @override
@@ -223,6 +255,7 @@ class _DraggableTabBarState extends State<_DraggableTabBar> {
         key: keys[index],
         child: widget.children[index],
         index: index,
+        animate: widget.animate,
         finishListener: (index) {
           keys[index].currentState.setLeft(lefts[index]);
         },
@@ -295,10 +328,14 @@ class TabPage extends StatefulWidget {
   /// Cannot be null, but empty list allowed
   final List<Widget> pages;
 
+  /// whether to enable the animation of tab slide, default to true,
+  /// if you want more stability and better performance, set it to false
+  final bool tabAnimate;
+
   List<Widget> get tabList =>
       tabs == null ? tabNames.map((e) => Text(e)).toList() : tabs;
 
-  TabPage({this.tabs, this.tabNames = const [], this.pages = const []}) {
+  TabPage({this.tabs, this.tabNames = const [], this.pages = const [], this.tabAnimate = true}) {
     assert((tabs != null && tabs.length == pages.length) ||
         tabNames.length == pages.length);
   }
@@ -330,6 +367,7 @@ class _TagPageState extends State<TabPage> {
         _DraggableTabBar(
           updateSelected: updateSelected,
           children: widget.tabList,
+          animate: widget.tabAnimate
         ),
         Expanded(
           child: Container(
